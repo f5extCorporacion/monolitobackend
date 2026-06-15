@@ -12,13 +12,16 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  // ✅ Habilitar CORS - Esta es la línea que necesitas
+  // ✅ Configuración CORS para Vercel
   app.enableCors({
-    origin: '*', // URL de tu frontend Angular
+    origin: process.env.CORS_ORIGIN || true, // URL de tu frontend Angular o true para desarrollo
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
     credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -27,9 +30,15 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen({ port: 3000, host: '0.0.0.0' });
+  // ✅ IMPORTANTE: Usar process.env.PORT para Vercel
+  const port = process.env.PORT || 3000;
+  
+  await app.listen({
+    port: port,
+    host: '0.0.0.0',
+  });
 
-  console.log(`🚀 Servidor iniciado en http://localhost:3000`);
+  console.log(`🚀 Servidor iniciado en http://localhost:${port}`);
 }
 
 bootstrap();
