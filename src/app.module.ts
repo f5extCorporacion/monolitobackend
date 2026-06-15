@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContactosModule } from './contactos/contactos.module';
 import { Tarjetm1Module } from './tarjetm1/tarjetm1.module';
-
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -11,6 +11,10 @@ import { Tarjetm1Module } from './tarjetm1/tarjetm1.module';
       database: 'database.sqlite',
       autoLoadEntities: true, // Carga automáticamente las entidades registradas en los submódulos
       synchronize: true,     // Solo para desarrollo
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     }),
     ContactosModule,
     Tarjetm1Module,
