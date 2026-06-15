@@ -1,0 +1,18 @@
+datasource db {
+  provider = "sqlite"
+ 
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Contactos {
+  id        Int      @id @default(autoincrement())
+  nombre      String?
+  celular     String?
+  email       String   @unique
+  ubicacion   String?
+  estado      String?
+  createdAt DateTime @default(now())
+}
