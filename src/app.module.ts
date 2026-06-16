@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContactosModule } from './contactos/contactos.module';
 import { Tarjetm1Module } from './tarjetm1/tarjetm1.module';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,5 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     ContactosModule,
     Tarjetm1Module,
   ],
+   controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
